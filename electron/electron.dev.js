@@ -3,7 +3,7 @@ const { spawn } = require('child_process');
 
 const port = process.env.PORT ? process.env.PORT - 100 : 3000;
 
-process.env.COOLBOT_START_URL = `http://localhost:${port}`;
+process.env.BROWSE_START_URL = `http://localhost:${port}`;
 
 const client = new net.Socket();
 
