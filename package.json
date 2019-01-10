@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "nf start",
     "java:wait": "nodemon java.dev.js -i electron/",
-    "java:compile": "sleep 1&&echo compiled"
+    "java:compile": "javac --help"
   },
   "devDependencies": {
     "foreman": "^3.0.1",

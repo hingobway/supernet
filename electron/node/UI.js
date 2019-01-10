@@ -9,12 +9,14 @@ const win = (exports.win = new BrowserWindow({
   minHeight: 600,
   frame: false,
   title: 'Supernet',
-  icon: __dirname + '/../public/favicon.ico'
+  icon: __dirname + '/../public/assets/img/logo_64x64.png'
 }));
 
 const eipc = require('./ElectronIPC');
 
-const tray = (exports.tray = new Tray(__dirname + '/../public/favicon.ico'));
+const tray = (exports.tray = new Tray(
+  __dirname + '/../public/assets/img/logo_64x64.png'
+));
 const contextMenu = Menu.buildFromTemplate([
   {
     label: 'Open Supernet',
