@@ -5,3 +5,5 @@ const { win } = require('./UI');
 
 ipc.on('minimize', () => win.minimize());
 ipc.on('close', () => win.close());
+
+ipc.on('devtools',()=>win.webContents.openDevTools());

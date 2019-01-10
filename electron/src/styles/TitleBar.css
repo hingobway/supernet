@@ -21,6 +21,10 @@
   z-index: 5000;
   background: #333;
   color: var(--accent-color);
+
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
 }
 
 ul.title {
@@ -37,6 +41,8 @@ ul.title > li {
 
 ul.title > li.navbtn {
   -webkit-app-region: no-drag;
+  padding-right: 2px;
+  padding-left: 2px;
   flex: 0;
   cursor: pointer;
   background: inherit;

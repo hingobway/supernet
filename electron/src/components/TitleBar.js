@@ -14,6 +14,12 @@ export default class TitleBar extends Component {
             <li className="name ml-1">Supernet</li>
             <li
               className="navbtn minim px-2"
+              onClick={() => ipc.send('devtools')}
+            >
+              <i className="material-icons">bug_report</i>
+            </li>
+            <li
+              className="navbtn minim px-2"
               onClick={() => ipc.send('minimize')}
             >
               <i className="material-icons">minimize</i>
