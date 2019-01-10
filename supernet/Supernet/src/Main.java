@@ -12,7 +12,8 @@ public class Main {
     public static void main(String[] args) {
 
         Thread DataReceiver = new Thread(new DataReceiver());
-
+        // DOES JAVA CONNECT TO ELECTRON OR DOES ELECTRON START THE CONNECTION
+        
     }
 
     public static void getData(String json) {
@@ -59,12 +60,16 @@ public class Main {
     }
 
     private static void close(JSONObject data) {
+    	
     }
 
     private static void connect(JSONObject data) {
     }
 
+    //send the friend's list to electron
     private static void get_friends(JSONObject data) {
+    		JSONObject friendsList = new JSONObject();
+    		
     }
 
     private static void get_history(JSONObject data) {
