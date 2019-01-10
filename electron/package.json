@@ -4,6 +4,7 @@
   "private": true,
   "license": "MIT",
   "dependencies": {
+    "electron": "^4.0.1",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-scripts": "2.1.1"
@@ -14,7 +15,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "dev": "nf start",
-    "electron:wait": "nodemon electron.dev.js -i ./src,./public",
+    "electron:wait": "nodemon electron.dev.js -i src/ -i public/",
     "electron:start": "electron main.js"
   },
   "eslintConfig": {
