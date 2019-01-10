@@ -1,0 +1,25 @@
+#cont {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#cont > * {
+  margin: 6px;
+}
+
+input[type='text'] {
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 4px;
+  color: var(--text);
+}
+
+input[type='text']::placeholder {
+  color: #ddd;
+}

@@ -1,2 +1,2 @@
-node: cd electron;yarn dev
+node: yarn --cwd ./electron dev
 java: yarn java:wait

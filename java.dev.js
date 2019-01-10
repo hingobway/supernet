@@ -5,6 +5,7 @@ const start = promisify(exec);
 
 0;
 (async () => {
-  const proc = await start('yarn java:compile');
-  //
+  const { stderr, stdout } = await start('yarn java:compile');
+
+  console.log(stderr, stdout);
 })();

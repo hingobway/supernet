@@ -7,8 +7,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "nf start",
-    "java:wait": "nodemon java.dev.js -i ./electron",
-    "java:compile": ""
+    "java:wait": "nodemon java.dev.js -i electron/",
+    "java:compile": "sleep 1&&echo compiled"
   },
   "devDependencies": {
     "foreman": "^3.0.1",
