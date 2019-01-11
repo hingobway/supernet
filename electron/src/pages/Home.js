@@ -2,24 +2,23 @@ import React, { Component } from 'react';
 
 import './Home.css';
 
-export default class Home extends Component {
-  state = {
-    peerID: ''
-  };
+const storage = window.localStorage;
 
+export default class Home extends Component {
   handleText = e => {
-    this.setState({ peerID: e.currentTarget.value });
+    if (e.key == 'Enter') {
+      storage.setItem('username', e.currentTarget.value);
+    }
   };
 
   render() {
     return (
       <div id="cont">
-        <h1>Home Page</h1>
+        <h1>Entry Page</h1>
         <input
           type="text"
-          placeholder="Friend ID"
-          onChange={this.handleText}
-          value={this.state.peerID}
+          placeholder="Your Username"
+          onKeyUp={this.handleText}
         />
       </div>
     );
