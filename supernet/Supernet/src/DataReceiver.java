@@ -7,17 +7,17 @@ import java.net.Socket;
 
 public class DataReceiver implements Runnable {
 	public static final int PORT = 6474;
-    ServerSocket serverSocket;
     Socket clientSocket;
     public static PrintWriter out; // public static because the DataSender will need access to it
     BufferedReader in;
+    public static String myIP;
 
     public void run() {
-
+    	//TODO: Instead of wait for connection, connect to electron
         try {
             // create the initial connection to electron
-        		serverSocket = new ServerSocket(PORT);
-            clientSocket = serverSocket.accept();
+        		clientSocket = new Socket("127.0.0.1", PORT);
+        		myIP = clientSocket.getLocalAddress().getHostAddress();
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             
