@@ -15,7 +15,7 @@ const jtoa = i => JSON.stringify(i);
 const server = net.createServer();
 server.listen(PORT);
 
-server.on('listening', () => exp.emit('ready'));
+// server.on('listening', () => exp.emit('ready'));
 
 // Handle incoming messages/connections
 server.on('connection', socket => {

@@ -15,8 +15,8 @@ class App extends Component {
         <div className="app">
           <TitleBar />
 
-          <Route path="/" exact component={Entry} />
           <Route path="/main" component={Main} />
+          <Route path="/" exact component={Entry} />
         </div>
       </Router>
     );

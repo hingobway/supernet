@@ -1,24 +1,5 @@
-#cont {
+#entry {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-input[type='text'] {
-  background: none;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 10px;
-  color: var(--text);
-  outline: 0;
-  box-shadow: none;
-  transition: box-shadow 0.3s;
-}
-
-input[type='text']::placeholder {
-  color: #ddd;
-}
-
-input[type='text']:focus {
-  box-shadow: #94cdff 0 0 9px 0;
 }

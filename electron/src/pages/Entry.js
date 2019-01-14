@@ -5,6 +5,9 @@ import './Entry.css';
 
 const storage = window.localStorage;
 
+const electron = window.require('electron');
+const ipc = electron.ipcRenderer;
+
 export default class Entry extends Component {
   state = {
     name: '',
@@ -27,19 +30,28 @@ export default class Entry extends Component {
   handleSub = e => {
     if (e.key === 'Enter') {
       storage.setItem('username', this.dash(this.state.name));
+      ipc.emit('ipc', {
+        method: 'username',
+        username: this.dash(this.state.name)
+      });
       this.setState({ done: true });
     }
   };
 
   componentDidMount() {
+    let username;
+    if ((username = storage.getItem('username'))) {
+      ipc.emit('ipc', { method: 'username', username });
+      this.setState({ done: true });
+    }
     if (this.textbox.current) this.textbox.current.focus();
   }
 
   render() {
-    return storage.getItem('username') || this.state.done ? (
+    return this.state.done ? (
       <Redirect to="/main" />
     ) : (
-      <div id="cont">
+      <div id="entry">
         <h1>Entry Page</h1>
         <input
           type="text"

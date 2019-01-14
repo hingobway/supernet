@@ -18,13 +18,32 @@ body,
   color: var(--text);
 }
 
-#cont {
+#cont,
+#entry {
   height: 100%;
   width: 100%;
   position: absolute;
   display: flex;
 }
 
-#cont > * {
+#cont > *,
+#entry > * {
   margin: 6px;
+}
+
+input[type='text'] {
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  color: var(--text);
+  outline: 0;
+  box-shadow: none;
+  transition: box-shadow 0.3s;
+}
+input[type='text']::placeholder {
+  color: #ddd;
+}
+input[type='text']:focus {
+  box-shadow: #94cdff 0 0 9px 0;
 }
