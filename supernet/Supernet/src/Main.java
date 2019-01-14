@@ -1,3 +1,5 @@
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.json.simple.JSONArray;
@@ -7,12 +9,18 @@ import org.json.simple.parser.ParseException;
 
 public class Main {
 
+	//The String is the id. 
 	public static HashMap<String, User> friends = new HashMap<>();
+	
+	//key is the chat idea (to field from packet). 
+	public static HashMap<String, ArrayList> chats = new HashMap<>();
+	public static PrintWriter out = DataReceiver.out;
+	public static String myUsername;
 	
     public static void main(String[] args) {
 
-        Thread DataReceiver = new Thread(new DataReceiver());
-        // DOES JAVA CONNECT TO ELECTRON OR DOES ELECTRON START THE CONNECTION
+        //Thread DataReceiver = new Thread(new DataReceiver());
+        System.out.println(getIDFromIP("192.168.1.210"));
         
     }
 
@@ -44,12 +52,10 @@ public class Main {
 	        case "send-msg":
 	            send_msg(data);
 	            break;
-	        case "net-msg-send":
-	            net_msg_send(data);
-	            break;
-	        case "new-msg":
-	            new_msg(data);
-	            break;
+	        case "username":
+	        		setUsername(data);
+	        		break;
+	        		
 	        default:
 	            System.out.println("Not a method");
 	        }
@@ -59,13 +65,26 @@ public class Main {
     		
     }
 
-    private static void close(JSONObject data) {
+    private static void setUsername(JSONObject data) {
+		myUsername = (String) data.get("username");
+	}
+
+	private static void close(JSONObject data) {
     	
     }
 
+    //java will send an ICC identifier message
     private static void connect(JSONObject data) {
+    		String userID = (String) data.get("user");
+    		friends.put(userID, new User(userID));
+    		//Send identify message using net-msg-send
+    		JSONObject identify = new JSONObject();
+		identify.put("method", "identify");
+		identify.put("username", myUsername);
+		net_msg_send(identify, userID);
     }
 
+    
     //send the friend's list to electron
     private static void get_friends(JSONObject data) {
     		JSONObject friendsList = new JSONObject();
@@ -76,18 +95,118 @@ public class Main {
     }
 
     private static void net_msg(JSONObject data) {
+    		String sender = (String) data.get("from");
+    		JSONObject packet = (JSONObject) data.get("packet");
+    		String method = (String) packet.get("method");
+    		//checks to see what type of message it is in order to know what to do
+    		if(method == "identify") {
+    			String username = (String) packet.get("username");
+    			if(friends.containsKey(sender))
+    				friends.get(sender).setName(username);
+    			
+    			//if the friend isn't added
+    			else {
+    				User newUser = new User(sender);
+    				newUser.setName(username);
+    				friends.put(sender, newUser);
+    				//send identify packet using net-msg-send
+    				JSONObject identify = new JSONObject();
+    				identify.put("method", "identify");
+    				identify.put("username", myUsername);
+    				net_msg_send(identify, sender);
+    			}
+    			
+    			//send a new peer message to EL
+    			JSONObject message = new JSONObject();
+    			message.put("method", "new-peer");
+    			message.put("username", username);
+    			message.put("id", sender);
+    			sendToEL(message);
+    			
+    			
+    		} else if(method == "user-msg") {
+    			String content = (String) packet.get("content");
+    			String to = (String) packet.get("to");
+    			//ADD CHAT TO HASHMAP OF CHATS with "to" as key
+    			if(chats.containsKey(to)) {
+    				chats.get(to).add(content);
+    			} else { //if there is no chat with that person
+    				ArrayList<String> chat = new ArrayList<>();
+    				chat.add(content);
+    				chats.put(to,chat);
+    			}
+    			
+    			double timestamp = (double) packet.get("timestamp");
+    			JSONObject message = new JSONObject();
+    			message.put("method", "new-msg");
+    			message.put("to", to);
+    			message.put("from", sender);
+    			message.put("content", content);
+    			message.put("timestamp", timestamp);
+    			sendToEL(message);
+    		}
     }
-
+    
     private static void peer_loss(JSONObject data) {
     }
 
+    //send out an icc user message
     private static void send_msg(JSONObject data) {
+    		String recipient = (String) data.get("to");
+    		String content = (String) data.get("content");
+    		double time = System.currentTimeMillis()/1000;
+    		time = Math.round(time);
+    		JSONObject message = new JSONObject();
+    		message.put("method", "send-msg");
+    		message.put("to", recipient);
+    		message.put("content", content);
+    		message.put("timestamp", Double.toString(time));
+    		net_msg_send(message, recipient);
     }
 
-    private static void net_msg_send(JSONObject data) {
+    private static void net_msg_send(JSONObject data, String to) {
+    		JSONObject packet = new JSONObject();
+    		JSONObject sender = new JSONObject();
+    		sender.put("id", getIDFromIP(DataReceiver.myIP));
+    		data.put("sender", sender);
+    		packet.put("method", "net-msg-send");
+    		
+    		packet.put("to", to);
+		packet.put("packet", data);
+		sendToEL(packet);
     }
 
-    private static void new_msg(JSONObject data) {
+    
+    public static void sendToEL(JSONObject message) {
+		out.println(message);
+		out.flush();
+	}
+	
+    public static String getIDFromIP(String IP) {
+    		String[] IDDict = {"lo", "no", "la", "di", "su", "do", "fu", "ba", "mi","ti"};
+    		String[] strippedIP = IP.split("\\.");
+
+    		String[] correctIP = new String[2]; //the IP address without the subnet mask
+    		String id = "0.";
+    		for(int i = 0; i < strippedIP.length; i++) {
+    			if(i > 1)
+    				correctIP[i-2] = strippedIP[i];
+    		}
+    		
+    		
+    		for(int i = 0; i < correctIP.length; i++) {
+    			if(i != 0) {
+    				id += " ";
+    			}
+    			for(char c : correctIP[i].toCharArray()) { //for each letter
+    				int num = Character.getNumericValue(c);
+    				id += IDDict[num];
+    			}
+    			
+    		}
+    		return id;
+    		
     }
+    
 
 }
