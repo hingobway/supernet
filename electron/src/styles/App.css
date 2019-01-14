@@ -1,5 +1,6 @@
 * {
   font-family: 'Roboto', sans-serif;
+  user-select: none;
 
   --background: #636e74;
   --text: #eeeeee;
@@ -15,4 +16,15 @@ body,
   overflow: hidden;
   background: var(--background);
   color: var(--text);
+}
+
+#cont {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  display: flex;
+}
+
+#cont > * {
+  margin: 6px;
 }

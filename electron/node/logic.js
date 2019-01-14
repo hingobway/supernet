@@ -3,6 +3,7 @@ const events = require('events');
 
 const exp = new events.EventEmitter();
 module.exports = () => new Promise(r => exp.once('ready', r));
+module.exports.logic = exp;
 
 const PORT = 6474;
 
@@ -13,13 +14,20 @@ const jtoa = i => JSON.stringify(i);
 // Initialize socket
 const server = net.createServer();
 server.listen(PORT);
+
 server.on('listening', () => exp.emit('ready'));
 
 // Handle incoming messages/connections
 server.on('connection', socket => {
+  exp.emit('ready');
+
+  // Handle Incoming Messages
   socket.on('data', d => {
     const resp = atoj(d);
     switch (resp.cmd) {
     }
   });
+
+  // Send Messages from electron
+  exp.on('send', obj => socket.write(jtoa(obj)));
 });

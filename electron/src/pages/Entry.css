@@ -1,15 +1,7 @@
 #cont {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-#cont > * {
-  margin: 6px;
 }
 
 input[type='text'] {
@@ -19,8 +11,14 @@ input[type='text'] {
   padding: 10px;
   color: var(--text);
   outline: 0;
+  box-shadow: none;
+  transition: box-shadow 0.3s;
 }
 
 input[type='text']::placeholder {
   color: #ddd;
+}
+
+input[type='text']:focus {
+  box-shadow: #94cdff 0 0 9px 0;
 }

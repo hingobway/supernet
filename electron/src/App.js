@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import TitleBar from './components/TitleBar';
 
-import Home from './pages/Home';
+import Entry from './pages/Entry';
+import Main from './pages/Main';
 
 import './styles/App.css';
 
@@ -14,7 +15,8 @@ class App extends Component {
         <div className="app">
           <TitleBar />
 
-          <Route path="/" exact component={Home} />
+          <Route path="/" exact component={Entry} />
+          <Route path="/main" component={Main} />
         </div>
       </Router>
     );

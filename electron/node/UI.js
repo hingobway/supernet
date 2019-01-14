@@ -15,7 +15,7 @@ const win = (exports.win = new BrowserWindow({
 const eipc = require('./ElectronIPC');
 
 const tray = (exports.tray = new Tray(
-  __dirname + '/../public/assets/img/logo_64x64.png'
+  __dirname + '/../public/assets/img/logo_32x32.png'
 ));
 const contextMenu = Menu.buildFromTemplate([
   {

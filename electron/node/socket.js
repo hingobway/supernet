@@ -3,6 +3,7 @@ const events = require('events');
 
 const exp = new events.EventEmitter();
 module.exports = () => new Promise(r => exp.once('ready', r));
+module.exports.socket = exp;
 
 const PORT = 6473;
 
