@@ -19,9 +19,8 @@ public class Main {
 	
     public static void main(String[] args) {
 
-        //Thread DataReceiver = new Thread(new DataReceiver());
-        System.out.println(getIDFromIP("192.168.1.210"));
-        
+        Thread DataReceiver = new Thread(new DataReceiver());
+        DataReceiver.run();
     }
 
     public static void getData(String json) {
@@ -76,6 +75,8 @@ public class Main {
     //java will send an ICC identifier message
     private static void connect(JSONObject data) {
     		String userID = (String) data.get("user");
+    		System.out.println("in Connect, got " + userID);
+
     		friends.put(userID, new User(userID));
     		//Send identify message using net-msg-send
     		JSONObject identify = new JSONObject();
@@ -164,7 +165,7 @@ public class Main {
     		net_msg_send(message, recipient);
     }
 
-    private static void net_msg_send(JSONObject data, String to) {
+	private static void net_msg_send(JSONObject data, String to) {
     		JSONObject packet = new JSONObject();
     		JSONObject sender = new JSONObject();
     		sender.put("id", getIDFromIP(DataReceiver.myIP));

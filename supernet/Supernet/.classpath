@@ -4,7 +4,5 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="/Users/bennyrubin/Documents/School/Distributed/finalProject/supernet/supernet/Supernet/Dependencies/java-json.jar"/>
 	<classpathentry kind="lib" path="/Users/bennyrubin/Documents/School/Distributed/finalProject/supernet/supernet/Supernet/Dependencies/json-simple-1.1.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/hingo/Documents/code/0-dist/final/supernet/supernet/Supernet/Dependencies/java-json.jar"/>
-	<classpathentry kind="lib" path="C:/Users/hingo/Documents/code/0-dist/final/supernet/supernet/Supernet/Dependencies/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

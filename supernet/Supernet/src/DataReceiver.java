@@ -24,6 +24,7 @@ public class DataReceiver implements Runnable {
             //listen on the socket for data from electron, and send it to main via getData()
             while(true) {
             		String inputJSON = in.readLine();
+            		System.out.println(inputJSON);
             		Main.getData(inputJSON);
             }
         } catch (IOException e) {
