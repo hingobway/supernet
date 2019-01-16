@@ -22,7 +22,7 @@ export default class NewFriend extends Component {
     e.preventDefault();
 
     this.setState({ text: '' });
-    ipc.emit('ipc-send', { method: 'connect', user: this.state.text });
+    ipc.send('ipc-send', { method: 'connect', user: this.state.text });
     this.props.done();
   };
 

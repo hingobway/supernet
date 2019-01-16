@@ -23,11 +23,17 @@ server.on('connection', socket => {
 
   // Handle Incoming Messages
   socket.on('data', d => {
-    const resp = atoj(d);
+    // const resp = atoj(d);
+    console.log(d);
+
     switch (resp.cmd) {
     }
   });
 
   // Send Messages from electron
-  exp.on('send', obj => socket.write(jtoa(obj)));
+  exp.on('send', obj => {
+    socket.write(jtoa(obj), err => {
+      console.log('sent msg', obj, err);
+    });
+  });
 });

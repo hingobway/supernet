@@ -9,4 +9,6 @@ ipc.on('close', () => win.close());
 
 ipc.on('devtools', () => win.webContents.openDevTools());
 
-ipc.on('ipc-send', obj => logic.emit('send', obj));
+ipc.on('ipc-send', (_, obj) => {
+  logic.emit('send', obj);
+});
