@@ -14,7 +14,7 @@ public class Main {
 	
 	//key is the chat idea (to field from packet). 
 	public static HashMap<String, ArrayList> chats = new HashMap<>();
-	public static PrintWriter out = DataReceiver.out;
+	public static PrintWriter out;
 	public static String myUsername;
 	
     public static void main(String[] args) {
@@ -25,7 +25,7 @@ public class Main {
 
     public static void getData(String json) {
     		JSONParser parser = new JSONParser();
-    		
+    		out = DataReceiver.out;
 		try {
 			JSONObject data = (JSONObject) parser.parse(json);
 			String method = (String) data.get("method");
@@ -174,8 +174,8 @@ public class Main {
     		
     		packet.put("to", to);
 		packet.put("packet", data);
+
 		sendToEL(packet);
-		System.out.println(packet.get("id"));
     }
 
     

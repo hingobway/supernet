@@ -1,4 +1,5 @@
 node_modules/
+supernet/.recommenders/
 .DS_Store
 .metadata/
 .vscode/
