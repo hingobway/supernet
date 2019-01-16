@@ -8,7 +8,7 @@ import java.net.Socket;
 public class DataReceiver implements Runnable {
 	public static final int PORT = 6474;
     Socket clientSocket;
-    public static PrintWriter out; // public static because the DataSender will need access to it
+    public static PrintWriter out; 
     BufferedReader in;
     public static String myIP;
 
@@ -20,12 +20,21 @@ public class DataReceiver implements Runnable {
         		myIP = clientSocket.getLocalAddress().getHostAddress();
             out = new PrintWriter(clientSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            
+    			String inputJSON = "";
+
             //listen on the socket for data from electron, and send it to main via getData()
             while(true) {
-            		String inputJSON = in.readLine();
+            		char[] charArray = new char[500];
+            		in.read(charArray);
+            		for(char c : charArray) {
+            			inputJSON += c;
+            		}
             		System.out.println(inputJSON);
-            		Main.getData(inputJSON);
+
+            		inputJSON = inputJSON.trim();
+	            	Main.getData(inputJSON);
+	            	inputJSON = "";
+            		
             }
         } catch (IOException e) {
             e.printStackTrace();
