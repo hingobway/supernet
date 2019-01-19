@@ -3,3 +3,4 @@ supernet/.recommenders/
 .DS_Store
 .metadata/
 .vscode/
+yarn-error.log

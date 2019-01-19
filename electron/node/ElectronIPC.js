@@ -12,3 +12,7 @@ ipc.on('devtools', () => win.webContents.openDevTools());
 ipc.on('ipc-send', (_, obj) => {
   logic.emit('send', obj);
 });
+
+ipc.on('store-ready', ({ sender }) => {
+  require('./store')(sender);
+});

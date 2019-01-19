@@ -10,6 +10,8 @@ export default class NewFriend extends Component {
     text: ''
   };
 
+  textbox = React.createRef();
+
   handleText = e =>
     this.setState({
       text: e.target.value
@@ -22,9 +24,13 @@ export default class NewFriend extends Component {
     e.preventDefault();
 
     this.setState({ text: '' });
-    ipc.send('ipc-send', { method: 'connect', user: this.state.text });
+    ipc.send('ipc-send', { method: 'connect', user: '0.' + this.state.text });
     this.props.done();
   };
+
+  componentDidMount() {
+    this.textbox.current.focus();
+  }
 
   render() {
     return (
@@ -36,6 +42,7 @@ export default class NewFriend extends Component {
             type="text"
             name="user"
             id="new-friend-user"
+            ref={this.textbox}
             placeholder="bado ladino"
             onChange={this.handleText}
             value={this.state.text}

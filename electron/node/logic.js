@@ -1,6 +1,8 @@
 const net = require('net');
 const events = require('events');
 
+const { socket } = require('./socket');
+
 const exp = new events.EventEmitter();
 module.exports = () => new Promise(r => exp.once('ready', r));
 module.exports.logic = exp;
@@ -19,12 +21,17 @@ server.listen(PORT);
 
 // Handle incoming messages/connections
 server.on('connection', socket => {
-  exp.emit('ready');
+  exp.emit('ready', socket.localAddress);
 
   // Handle Incoming Messages
   socket.on('data', d => {
     const resp = atoj(d);
-    switch (resp.cmd) {
+    switch (resp.method) {
+      case 'net-msg-send':
+        if (resp.packet && resp.to) {
+          socket.emit('send', resp.to, resp.packet);
+        }
+        break;
     }
   });
 
@@ -33,3 +40,5 @@ server.on('connection', socket => {
 
   socket.on('close', () => exp.removeListener('send', sending));
 });
+
+exp.on('ready', a => console.log(a));

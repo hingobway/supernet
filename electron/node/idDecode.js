@@ -3,6 +3,7 @@ const dictionary = ['lo', 'no', 'la', 'di', 'su', 'do', 'fu', 'ba', 'mi', 'ti'];
 const dtop = (exports.dtop = d => {
   let ok = true;
   let out = d
+    .slice(2)
     .split(' ')
     .map(cur =>
       cur
@@ -22,5 +23,5 @@ const dtop = (exports.dtop = d => {
 
 const ptod = (exports.ptod = p => {
   let ok = true;
-  let out = p.split();
+  let out = p.split('.');
 });
