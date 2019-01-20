@@ -18,7 +18,7 @@ function wait(method, id, cb) {
   ipc.once(`store-${method}-cb`, (_, req, ...params) => {
     if (req == id) {
       cb(...params);
-    } else wait(cb);
+    } else wait(method, id, cb);
   });
 }
 
