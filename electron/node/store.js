@@ -15,7 +15,7 @@ module.exports = async sender => {
  * Wait function will fake an async/await flow using the events API by recursively listening for a callback event with the request ID that was sent.
  */
 function wait(method, id, cb) {
-  ipc.on(`store-${method}-cb`, (_, req, ...params) => {
+  ipc.once(`store-${method}-cb`, (_, req, ...params) => {
     if (req == id) {
       cb(...params);
     } else wait(cb);
