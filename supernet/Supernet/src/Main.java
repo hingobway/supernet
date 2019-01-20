@@ -62,6 +62,7 @@ public class Main {
 	            System.out.println("Not a method");
 	        }
 		} catch (ParseException e) {
+			System.out.println(json);
 			e.printStackTrace();
 		}
     		

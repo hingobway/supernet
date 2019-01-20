@@ -43,7 +43,11 @@ const sockHandler = socket =>
 
     socket.on('data', d => {
       const data = atoj(d);
-      require('./logic').logic.emit('send', data.sender.id, data);
+      require('./logic').logic.emit('send', {
+        method: 'net-msg',
+        from: data.sender.id,
+        packet: data
+      });
     });
   });
 
