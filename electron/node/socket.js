@@ -31,37 +31,36 @@ server.on('listening', () => exp.emit('ready'));
 // Socket Handler
 const sockHandler = socket =>
   new Promise(cb => {
+    // let ip = socket.address().address;
+    // ip = ip.split(':');
+    // ip = ip[ip.length - 1];
+    let ip = socket.remoteAddress;
+
     // Creates conn, ref to the Connection object in peers array.
-    const conn =
-      peers[
-        peers.push(
-          new Connection({
-            socket,
-            ip: socket.address().address
-          })
-        ) - 1
-      ];
+    const conn = peers[peers.push(new Connection({ socket, ip })) - 1];
     cb(conn);
 
     socket.on('data', d => {
       const resp = atoj(d);
+      console.log(resp);
       switch (resp.cmd) {
         case 'identify':
-          console.log(resp);
-
           break;
       }
     });
   });
 
+// Responds to IPC-net-msg-send.
 exp.on('send', async (recip, packet) => {
   const el = peers.findIndex(i => i.id === recip);
   // if peer already exists, send message and stop.
   if (el > -1) return peers[el].socket.write(jtoa(packet));
   // else:
-  const conn = await sockHandler(net.createConnection(PORT, dtop(recip)));
-  conn.once('connect', () => {
-    conn.write(jtoa(packet));
+  const { socket } = await sockHandler(net.createConnection(PORT, dtop(recip)));
+  socket.once('connect', () => {
+    console.log(packet);
+
+    socket.write(jtoa(packet));
   });
 });
 

@@ -54,6 +54,9 @@ public class Main {
 	        case "username":
 	        		setUsername(data);
 	        		break;
+	        case "correct-ip":
+	        		DataReceiver.setIP(data);
+	        		break;
 	        		
 	        default:
 	            System.out.println("Not a method");

@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import org.json.simple.JSONObject;
+
 public class DataReceiver implements Runnable {
 	public static final int PORT = 6474;
     Socket clientSocket;
@@ -39,5 +41,9 @@ public class DataReceiver implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public static void setIP(JSONObject corrected) {    	
+    	myIP = (String) corrected.get("ip");
     }
 }

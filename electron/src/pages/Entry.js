@@ -30,7 +30,7 @@ export default class Entry extends Component {
   handleSub = e => {
     if (e.key === 'Enter') {
       storage.setItem('username', this.dash(this.state.name));
-      ipc.emit('ipc', {
+      ipc.send('ipc-send', {
         method: 'username',
         username: this.dash(this.state.name)
       });
@@ -41,7 +41,7 @@ export default class Entry extends Component {
   componentDidMount() {
     let username;
     if ((username = storage.getItem('username'))) {
-      ipc.emit('ipc', { method: 'username', username });
+      ipc.send('ipc-send', { method: 'username', username });
       this.setState({ done: true });
     }
     if (this.textbox.current) this.textbox.current.focus();

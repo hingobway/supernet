@@ -49,6 +49,7 @@ export default class Sidebar extends Component {
       selfIP: e.target.value,
       selfID: ipc.sendSync('ptod', e.target.value).slice(2)
     });
+    ipc.send('ipc-send', { method: 'correct-ip', ip: e.target.value });
   };
 
   render() {
