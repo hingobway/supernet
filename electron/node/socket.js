@@ -29,30 +29,40 @@ server.listen(PORT);
 server.on('listening', () => exp.emit('ready'));
 
 // Socket Handler
-const sockHandler = socket => {
-  const conn =
-    peers[
-      peers.push(
-        new Connection({
-          socket,
-          ip: socket.address().address
-        })
-      ) - 1
-    ];
+const sockHandler = socket =>
+  new Promise(cb => {
+    // Creates conn, ref to the Connection object in peers array.
+    const conn =
+      peers[
+        peers.push(
+          new Connection({
+            socket,
+            ip: socket.address().address
+          })
+        ) - 1
+      ];
+    cb(conn);
 
-  socket.on('data', d => {
-    const resp = atoj(d);
-    switch (resp.cmd) {
-    }
+    socket.on('data', d => {
+      const resp = atoj(d);
+      switch (resp.cmd) {
+        case 'identify':
+          console.log(resp);
+
+          break;
+      }
+    });
   });
-};
 
-exp.on('send', (recip, packet) => {
+exp.on('send', async (recip, packet) => {
   const el = peers.findIndex(i => i.id === recip);
   // if peer already exists, send message and stop.
   if (el > -1) return peers[el].socket.write(jtoa(packet));
   // else:
-  sockHandler(net.createConnection(PORT, dtop(recip)));
+  const conn = await sockHandler(net.createConnection(PORT, dtop(recip)));
+  conn.once('connect', () => {
+    conn.write(jtoa(packet));
+  });
 });
 
 // Handle incoming messages/connections
