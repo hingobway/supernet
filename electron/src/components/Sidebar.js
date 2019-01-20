@@ -8,16 +8,6 @@ const ipc = electron.ipcRenderer;
 
 export default class Sidebar extends Component {
   state = {
-    friends: [
-      {
-        name: 'hingobway',
-        msg: 'snippet snippet...'
-      },
-      {
-        name: 'hingobway',
-        msg: 'snippet snippet...'
-      }
-    ],
     selfIP: '',
     selfID: ''
   };
@@ -62,12 +52,23 @@ export default class Sidebar extends Component {
           </i>
         </div>
         <ul className="sidebar">
-          {this.state.friends.map((cur, ind) => (
-            <li className="sidebar" key={ind}>
-              <div className="name">{cur.name}</div>
-              <div className="msg">{cur.msg}</div>
-            </li>
-          ))}
+          {Object.keys(this.props.chats).map((cur, ind) => {
+            const id = cur;
+            cur = this.props.chats[cur];
+            return (
+              <li
+                className={'sidebar ' + (cur.active ? 'active' : '')}
+                key={ind}
+                data-chat={id}
+                onClick={this.props.switchChat}
+              >
+                <div className="name">{cur.name}</div>
+                <div className="msg">
+                  {cur.messages[cur.messages.length - 1].content}
+                </div>
+              </li>
+            );
+          })}
         </ul>
         <div className="sidebar share">
           <div id="selfID">

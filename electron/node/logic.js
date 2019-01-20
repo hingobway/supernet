@@ -1,7 +1,11 @@
 const net = require('net');
 const events = require('events');
 
+const electron = require('electron');
+const ipc = electron.ipcMain;
+
 const { socket } = require('./socket');
+const { chat } = require('./chat');
 
 /**
  * Sets public vars. more info in ./socket.js (same concept there.)
@@ -32,6 +36,11 @@ server.on('connection', java => {
         if (resp.packet && resp.to) {
           socket.emit('send', resp.to, resp.packet);
         }
+        break;
+      case 'new-peer':
+        chat.send('new-peer', { username: resp.username, id: resp.id });
+        break;
+      case 'new-msg':
         break;
     }
   });

@@ -3,16 +3,20 @@ const ipc = electron.ipcMain;
 
 const { win } = require('./UI');
 const { logic } = require('./logic');
+const { socket } = require('./socket');
 
 const Connection = require('./Connection');
 const { ptod, dtop } = new Connection({});
 
+ipc.on('devtools', () => win.webContents.openDevTools());
 ipc.on('minimize', () => win.minimize());
 ipc.on('close', () => win.close());
 
-ipc.on('devtools', () => win.webContents.openDevTools());
 ipc.on('store-ready', ({ sender }) => {
   require('./store')(sender);
+});
+ipc.on('chat-ready', ({ sender }) => {
+  require('./chat')(sender);
 });
 
 ipc.on('ipc-send', (_, obj) => {
