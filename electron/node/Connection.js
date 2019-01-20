@@ -4,8 +4,10 @@ const dictionary = ['lo', 'no', 'la', 'di', 'su', 'do', 'fu', 'ba', 'mi', 'ti'];
 const ipPrefix = '192.168.';
 
 class Connection extends events {
-  constructor({ id, ip }) {
+  constructor({ socket, id, ip }) {
     super();
+
+    this.socket = socket;
 
     if (id) {
       this.id = id;

@@ -1,6 +1,10 @@
 const net = require('net');
 const events = require('events');
 
+const { store } = require('./store');
+const Connection = require('./Connection');
+const { ptod, dtop } = new Connection({});
+
 /**
  * Set public vars.
  * - Initializes an event emitter for this class, which can be used to communicate between classes easily.
@@ -17,18 +21,39 @@ const PORT = 6473;
 const atoj = i => JSON.parse(i.toString());
 const jtoa = i => JSON.stringify(i);
 
+const peers = [];
+
 // Initialize socket
 const server = net.createServer();
 server.listen(PORT);
-server.on('listening', () => exp.emit('ready', server.address()));
+server.on('listening', () => exp.emit('ready'));
 
-exp.on('ready', a => console.log(a));
+// Socket Handler
+const sockHandler = socket => {
+  const conn =
+    peers[
+      peers.push(
+        new Connection({
+          socket,
+          ip: socket.address().address
+        })
+      ) - 1
+    ];
 
-// Handle incoming messages/connections
-server.on('connection', socket => {
   socket.on('data', d => {
     const resp = atoj(d);
     switch (resp.cmd) {
     }
   });
+};
+
+exp.on('send', (recip, packet) => {
+  const el = peers.findIndex(i => i.id === recip);
+  // if peer already exists, send message and stop.
+  if (el > -1) return peers[el].socket.write(jtoa(packet));
+  // else:
+  sockHandler(net.createConnection(PORT, dtop(recip)));
 });
+
+// Handle incoming messages/connections
+server.on('connection', sockHandler);

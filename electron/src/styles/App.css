@@ -7,7 +7,7 @@
 }
 
 body,
-#app {
+.app {
   margin: 0px;
   padding: 0px;
   position: absolute;
@@ -16,13 +16,13 @@ body,
   overflow: hidden;
   background: var(--background);
   color: var(--text);
+  display: flex;
+  flex-direction: column;
 }
 
 #cont,
 #entry {
-  height: 100%;
-  width: 100%;
-  position: absolute;
+  flex: 1;
   display: flex;
 }
 

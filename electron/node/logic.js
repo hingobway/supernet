@@ -3,6 +3,9 @@ const events = require('events');
 
 const { socket } = require('./socket');
 
+/**
+ * Sets public vars. more info in ./socket.js (same concept there.)
+ */
 const exp = new events.EventEmitter();
 module.exports = () => new Promise(r => exp.once('ready', r));
 module.exports.logic = exp;
@@ -17,14 +20,12 @@ const jtoa = i => JSON.stringify(i);
 const server = net.createServer();
 server.listen(PORT);
 
-// server.on('listening', () => exp.emit('ready'));
-
 // Handle incoming messages/connections
-server.on('connection', socket => {
-  exp.emit('ready', socket.localAddress);
+server.on('connection', java => {
+  exp.emit('ready');
 
   // Handle Incoming Messages
-  socket.on('data', d => {
+  java.on('data', d => {
     const resp = atoj(d);
     switch (resp.method) {
       case 'net-msg-send':
@@ -36,9 +37,7 @@ server.on('connection', socket => {
   });
 
   // Send Messages from electron
-  const sending = exp.on('send', obj => socket.write(jtoa(obj)));
+  const sending = exp.on('send', obj => java.write(jtoa(obj)));
 
-  socket.on('close', () => exp.removeListener('send', sending));
+  java.on('close', () => exp.removeListener('send', sending));
 });
-
-exp.on('ready', a => console.log(a));

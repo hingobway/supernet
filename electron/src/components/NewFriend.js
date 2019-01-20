@@ -15,6 +15,7 @@ export default class NewFriend extends Component {
   handleText = e =>
     this.setState({
       text: e.target.value
+        .toLowerCase()
         .replace(/[^a-z]+/g, ' ')
         .replace(/^ /, '')
         .slice(0, 11)

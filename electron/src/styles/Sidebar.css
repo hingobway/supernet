@@ -1,7 +1,10 @@
 #sidebar {
   background: #4d575c;
   padding: 10px;
-  width: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  flex: 0 1 150px;
 }
 #sidebar > .header {
   padding-left: 2px;
@@ -21,6 +24,7 @@
 
 ul.sidebar {
   list-style: none;
+  flex: 1;
 }
 
 li.sidebar {
@@ -34,4 +38,25 @@ li.sidebar > .msg {
   color: #bbb;
   font-style: italic;
   font-size: 12px;
+}
+
+.sidebar.share {
+  border-top: 1px solid #475055;
+  padding-top: 15px;
+}
+
+.sidebar.share > #selfID {
+  padding-bottom: 5px;
+}
+
+.sidebar .gray {
+  color: #ccc;
+  background: #464f53;
+  border-radius: 3px;
+  padding: 3px;
+  user-select: all;
+}
+
+.sidebar.share select {
+  outline: 0;
 }
