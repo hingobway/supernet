@@ -1,7 +1,7 @@
 const net = require('net');
 const events = require('events');
 
-const { logic } = require('./logic');
+// const { logic } = require('./logic');
 const { store } = require('./store');
 const Connection = require('./Connection');
 const { ptod, dtop } = new Connection({});
@@ -43,7 +43,7 @@ const sockHandler = socket =>
 
     socket.on('data', d => {
       const data = atoj(d);
-      logic.emit('send', data.sender.id, data);
+      require('./logic').logic.emit('send', data.sender.id, data);
     });
   });
 

@@ -37,7 +37,10 @@ server.on('connection', java => {
   });
 
   // Send Messages from electron
-  const sending = exp.on('send', obj => java.write(jtoa(obj)));
+  function sending(obj) {
+    java.write(jtoa(obj));
+  }
+  exp.on('send', sending);
 
   java.on('close', () => exp.removeListener('send', sending));
 });
