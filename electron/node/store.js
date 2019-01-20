@@ -40,13 +40,6 @@ module.exports.store = {
     new Promise(cb => {
       const id = uuid();
       send('set', id, key, value);
-      async function wait(r) {
-        ipc.once('store-set-cb', (_, req) => {
-          if (req == id) {
-            r();
-          } else return wait(r);
-        });
-      }
-      wait(cb);
+      wait('set', id, cb);
     })
 };
