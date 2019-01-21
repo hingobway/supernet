@@ -15,4 +15,6 @@ module.exports = sender => {
 
 module.exports.chat = { send: (...p) => send(...p) };
 
-ipc.on('chat-send-msg', (to, content) => logic.emit('send', { to, content }));
+ipc.on('chat-send-msg', (_, to, content) =>
+  logic.emit('send', { method: 'send-msg', to, content })
+);

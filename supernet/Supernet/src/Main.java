@@ -119,7 +119,6 @@ public class Main {
     				identify.put("method", "identify");
     				identify.put("username", myUsername);
     				net_msg_send(identify, sender);
-    				System.out.println("Sent identify packet: "+identify+" to "+sender);
     			}
     			
     			//send a new peer message to EL
@@ -142,7 +141,7 @@ public class Main {
     				chats.put(to,chat);
     			}
     			
-    			double timestamp = (double) packet.get("timestamp");
+    			String timestamp = (String) packet.get("timestamp");
     			JSONObject message = new JSONObject();
     			message.put("method", "new-msg");
     			message.put("to", to);
@@ -163,7 +162,7 @@ public class Main {
     		double time = System.currentTimeMillis()/1000;
     		time = Math.round(time);
     		JSONObject message = new JSONObject();
-    		message.put("method", "send-msg");
+    		message.put("method", "user-msg");
     		message.put("to", recipient);
     		message.put("content", content);
     		message.put("timestamp", Double.toString(time));

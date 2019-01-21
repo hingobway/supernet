@@ -76,12 +76,15 @@ export default class Main extends Component {
     });
     ipc.on('chat-new-msg', ({ to, from, content, timestamp }) => {
       this.setState(({ chats }) => {
-        if (chats[to])
+        if (chats[to]) {
           chats[to].messages.push({
             from,
             content: decodeURIComponent(content),
             timestamp
           });
+
+          return chats;
+        }
       });
     });
   }

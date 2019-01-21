@@ -5,7 +5,6 @@ const electron = require('electron');
 const ipc = electron.ipcMain;
 
 const { socket } = require('./socket');
-const { chat } = require('./chat');
 
 /**
  * Sets public vars. more info in ./socket.js (same concept there.)
@@ -27,6 +26,7 @@ server.listen(PORT);
 // Handle incoming messages/connections
 server.on('connection', java => {
   exp.emit('ready');
+  const { chat } = require('./chat');
 
   // Handle Incoming Messages
   java.on('data', d => {
