@@ -16,18 +16,17 @@ export default class Main extends Component {
     modal: null,
     chats: {
       '0.bado ladino': {
-        active: true,
         name: 'hingobway',
         messages: [
           {
             from: 'hingobway',
-            content: 'sup bro!',
+            content:
+              'supsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsup',
             timestamp: 500000000
           }
         ]
       },
       '0.oopsie doopsie': {
-        active: false,
         name: 'the bois',
         messages: [
           {
@@ -60,9 +59,9 @@ export default class Main extends Component {
 
   componentDidMount() {
     ipc.send('chat-ready');
-    ipc.on('chat-new-peer', ({ username, id }) => {
+    ipc.on('chat-new-peer', (_, { username, id }) => {
       this.setState(({ chats }) => {
-        const nc = chats;
+        let nc = chats;
         nc[id] = {
           name: username,
           messages: []
@@ -73,6 +72,7 @@ export default class Main extends Component {
           out[k] = cur;
           return out;
         }, {});
+        console.log(username, id, nc);
         return nc;
       });
     });
@@ -82,12 +82,6 @@ export default class Main extends Component {
   }
 
   render() {
-    console.log(
-      Object.keys(this.state.chats)[
-        Object.keys(this.state.chats).findIndex(i => this.state.chats[i].active)
-      ]
-    );
-
     return (
       <div id="cont">
         {this.state.modal ? (

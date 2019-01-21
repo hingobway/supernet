@@ -104,7 +104,7 @@ public class Main {
     		JSONObject packet = (JSONObject) data.get("packet");
     		String method = (String) packet.get("method");
     		//checks to see what type of message it is in order to know what to do
-    		if(method == "identify") {
+    		if(method.equals("identify")) {
     			String username = (String) packet.get("username");
     			if(friends.containsKey(sender))
     				friends.get(sender).setName(username);
@@ -119,6 +119,7 @@ public class Main {
     				identify.put("method", "identify");
     				identify.put("username", myUsername);
     				net_msg_send(identify, sender);
+    				System.out.println("Sent identify packet: "+identify+" to "+sender);
     			}
     			
     			//send a new peer message to EL
@@ -129,7 +130,7 @@ public class Main {
     			sendToEL(message);
     			
     			
-    		} else if(method == "user-msg") {
+    		} else if(method.equals("user-msg")) {
     			String content = (String) packet.get("content");
     			String to = (String) packet.get("to");
     			//ADD CHAT TO HASHMAP OF CHATS with "to" as key
@@ -186,6 +187,7 @@ public class Main {
     public static void sendToEL(JSONObject message) {
 		out.println(message);
 		out.flush();
+		System.out.println("Sent IPC message: "+message);
 	}
 	
     public static String getIDFromIP(String IP) {

@@ -64,7 +64,9 @@ export default class Sidebar extends Component {
               >
                 <div className="name">{cur.name}</div>
                 <div className="msg">
-                  {cur.messages[cur.messages.length - 1].content}
+                  {cur.messages.length
+                    ? cur.messages[cur.messages.length - 1].content
+                    : 'Start a conversation...'}
                 </div>
               </li>
             );

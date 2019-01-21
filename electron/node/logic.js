@@ -33,12 +33,10 @@ server.on('connection', java => {
     const resp = atoj(d);
     switch (resp.method) {
       case 'net-msg-send':
-        if (resp.packet && resp.to) {
-          socket.emit('send', resp.to, resp.packet);
-        }
+        if (resp.packet && resp.to) socket.emit('send', resp.to, resp.packet);
         break;
       case 'new-peer':
-        chat.send('new-peer', { username: resp.username, id: resp.id });
+        chat.send('new-peer', resp);
         break;
       case 'new-msg':
         break;

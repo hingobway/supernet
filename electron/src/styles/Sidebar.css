@@ -31,6 +31,8 @@ ul.sidebar {
 li.sidebar {
   border-top: 1px solid #475055;
   padding: 15px;
+  margin-bottom: 2px;
+  cursor: pointer;
 }
 li.sidebar > .name {
   color: #ddd;

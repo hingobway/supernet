@@ -11,5 +11,4 @@ module.exports = sender => {
   send = (c, ...p) => sender.send('chat-' + c, ...p);
 };
 
-const exp = (module.exports.chat = new events.EventEmitter());
-exp.on('message', (method, ...p) => send(method, ...p));
+module.exports.chat = { send: (...p) => send(...p) };
