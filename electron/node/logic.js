@@ -39,6 +39,7 @@ server.on('connection', java => {
         chat.send('new-peer', resp);
         break;
       case 'new-msg':
+        chat.send('new-msg', resp);
         break;
     }
   });

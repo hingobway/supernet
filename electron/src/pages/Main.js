@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 
-import moment from 'moment';
-
 import Sidebar from '../components/Sidebar';
 import NewFriend from '../components/NewFriend';
 import Chat from '../components/Chat';
@@ -77,7 +75,14 @@ export default class Main extends Component {
       });
     });
     ipc.on('chat-new-msg', ({ to, from, content, timestamp }) => {
-      //
+      this.setState(({ chats }) => {
+        if (chats[to])
+          chats[to].messages.push({
+            from,
+            content: decodeURIComponent(content),
+            timestamp
+          });
+      });
     });
   }
 
@@ -102,6 +107,13 @@ export default class Main extends Component {
             i => this.state.chats[i].active
           ) > -1 ? (
             <Chat
+              chat={
+                Object.keys(this.state.chats)[
+                  Object.keys(this.state.chats).findIndex(
+                    i => this.state.chats[i].active
+                  )
+                ]
+              }
               messages={
                 this.state.chats[
                   Object.keys(this.state.chats)[

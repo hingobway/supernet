@@ -3,6 +3,8 @@ const events = require('events');
 const electron = require('electron');
 const ipc = electron.ipcMain;
 
+const { logic } = require('./logic');
+
 /**
  * Handshake for communication from JAVA to frontend chat. More information on how this works in ./store.js.
  */
@@ -12,3 +14,5 @@ module.exports = sender => {
 };
 
 module.exports.chat = { send: (...p) => send(...p) };
+
+ipc.on('chat-send-msg', (to, content) => logic.emit('send', { to, content }));

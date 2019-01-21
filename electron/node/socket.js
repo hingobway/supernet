@@ -59,8 +59,6 @@ exp.on('send', async (recip, packet) => {
   // else:
   const { socket } = await sockHandler(net.createConnection(PORT, dtop(recip)));
   socket.once('connect', () => {
-    console.log(packet);
-
     socket.write(jtoa(packet));
   });
 });
