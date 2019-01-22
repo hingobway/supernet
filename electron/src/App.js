@@ -16,7 +16,7 @@ class App extends Component {
           <TitleBar />
 
           <Route path="/main" component={Main} />
-          <Route path="/" exact component={Entry} />
+          <Route path="/" component={Entry} />
         </div>
       </Router>
     );

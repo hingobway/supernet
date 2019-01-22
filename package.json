@@ -6,7 +6,9 @@
   "author": "hingobway",
   "license": "MIT",
   "scripts": {
+    "start": "cd electron && yarn electron:start",
     "dev": "nf start",
+    "electron:build": "cd electron && yarn build",
     "java:wait": "nodemon java.dev.js -i electron/",
     "java:compile": "echo ok"
   },

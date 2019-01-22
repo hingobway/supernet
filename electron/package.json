@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
+  "homepage": "./",
   "dependencies": {
     "electron": "^4.0.1",
     "moment": "^2.23.0",
