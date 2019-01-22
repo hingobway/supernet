@@ -11,16 +11,9 @@ import java.net.Socket;
 public class test {
 
 	public static void main(String[] args) throws IOException {
-		ServerSocket sock = new ServerSocket(6475);
-		Socket clientSock;
-		
-		clientSock = sock.accept();
- 
-		PrintWriter out = new PrintWriter(clientSock.getOutputStream(), true);
-        BufferedReader in = new BufferedReader(new InputStreamReader(clientSock.getInputStream()));
-         
-         out.println("THIS IS A TEST");
-
+		int time = Math.round(System.currentTimeMillis() / 1000);
+		String times = Integer.toString(time);
+		System.out.println(times);
 	}
 
 }

@@ -159,13 +159,12 @@ public class Main {
     private static void send_msg(JSONObject data) {
     		String recipient = (String) data.get("to");
     		String content = (String) data.get("content");
-    		double time = System.currentTimeMillis()/1000;
-    		time = Math.round(time);
+    		int time = Math.round(System.currentTimeMillis() / 1000);
     		JSONObject message = new JSONObject();
     		message.put("method", "user-msg");
     		message.put("to", recipient);
     		message.put("content", content);
-    		message.put("timestamp", Double.toString(time));
+    		message.put("timestamp", Integer.toString(time));
     		net_msg_send(message, recipient);
     }
 
