@@ -75,10 +75,10 @@ export default class Main extends Component {
         return nc;
       });
     });
-    ipc.on('chat-new-msg', (_, { from, content, timestamp }) => {
+    ipc.on('chat-new-msg', (_, { to, from, content, timestamp }) => {
       this.setState(({ chats }) => {
-        if (chats[from]) {
-          chats[from].messages.push({
+        if (chats[to]) {
+          chats[to].messages.push({
             from,
             content: decodeURIComponent(content),
             timestamp
@@ -90,7 +90,7 @@ export default class Main extends Component {
     });
   }
 
-  newMsg = (chat, content) => {
+  newMsg = (chat, content, timestamp) => {
     this.setState(({ chats }) => {
       if (chats[chat]) {
         chats[chat].messages.push({

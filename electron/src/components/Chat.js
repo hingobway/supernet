@@ -30,7 +30,7 @@ export default class Chat extends Component {
         this.props.chat,
         encodeURIComponent(e.target.value)
       );
-      this.props.newMsg(this.props.chat, e.target.value);
+      this.props.newMsg(this.props.chat, e.target.value, moment().unix());
       this.setState({ text: '' });
     }
   };

@@ -144,8 +144,8 @@ public class Main {
     			String timestamp = (String) packet.get("timestamp");
     			JSONObject message = new JSONObject();
     			message.put("method", "new-msg");
-    			message.put("to", to);
-    			message.put("from", sender);
+    			message.put("to", sender);
+    			message.put("from", friends.get(sender).getName());
     			message.put("content", content);
     			message.put("timestamp", timestamp);
     			sendToEL(message);
