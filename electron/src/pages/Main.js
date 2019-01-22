@@ -9,6 +9,8 @@ import './Main.css';
 const electron = window.require('electron');
 const ipc = electron.ipcRenderer;
 
+const storage = window.localStorage;
+
 export default class Main extends Component {
   state = {
     modal: null,
@@ -70,14 +72,13 @@ export default class Main extends Component {
           out[k] = cur;
           return out;
         }, {});
-        console.log(username, id, nc);
         return nc;
       });
     });
-    ipc.on('chat-new-msg', ({ to, from, content, timestamp }) => {
+    ipc.on('chat-new-msg', (_, { from, content, timestamp }) => {
       this.setState(({ chats }) => {
-        if (chats[to]) {
-          chats[to].messages.push({
+        if (chats[from]) {
+          chats[from].messages.push({
             from,
             content: decodeURIComponent(content),
             timestamp
@@ -88,6 +89,20 @@ export default class Main extends Component {
       });
     });
   }
+
+  newMsg = (chat, content) => {
+    this.setState(({ chats }) => {
+      if (chats[chat]) {
+        chats[chat].messages.push({
+          from: storage.getItem('username'),
+          content: decodeURIComponent(content),
+          timestamp
+        });
+
+        return chats;
+      }
+    });
+  };
 
   render() {
     return (
@@ -126,6 +141,7 @@ export default class Main extends Component {
                   ]
                 ].messages
               }
+              newMsg={this.newMsg}
             />
           ) : null}
         </div>
