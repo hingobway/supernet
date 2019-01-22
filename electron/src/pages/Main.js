@@ -16,7 +16,7 @@ export default class Main extends Component {
     modal: null,
     chats: {
       '0.bado ladino': {
-        name: 'hingobway',
+        name: 'Local Chat',
         messages: [
           {
             from: 'CoolBot',
@@ -97,7 +97,7 @@ export default class Main extends Component {
       if (chats[chat]) {
         chats[chat].messages.push({
           from: storage.getItem('username'),
-          content: decodeURIComponent(content),
+          content,
           timestamp
         });
 
