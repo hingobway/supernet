@@ -10,7 +10,7 @@ const ipc = electron.ipcRenderer;
 export default class Chat extends Component {
   state = {
     text: '',
-    update: 0
+    updateTime: false
   };
 
   scrollPointer = React.createRef();
@@ -24,7 +24,7 @@ export default class Chat extends Component {
   };
 
   handleSubmit = e => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && e.target.value.length > 0) {
       ipc.send(
         'chat-send-msg',
         this.props.chat,
@@ -36,14 +36,12 @@ export default class Chat extends Component {
   };
 
   componentDidUpdate = () => {
-    this.scrollToBottom();
+    if (this.state.updateTime === true) this.setState({ updateTime: false });
+    else this.scrollToBottom();
   };
   componentDidMount = () => {
     this.scrollToBottom();
-    setInterval(
-      () => this.setState(({ update }) => ({ update: update++ })),
-      2000
-    );
+    setInterval(() => this.setState({ updateTime: true }), 20000);
   };
 
   render() {

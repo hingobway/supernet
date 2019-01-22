@@ -19,20 +19,21 @@ export default class Main extends Component {
         name: 'hingobway',
         messages: [
           {
-            from: 'hingobway',
+            from: 'CoolBot',
             content:
-              'supsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsupsup',
+              'This is a showcase of the potential for multiple chats at once.',
             timestamp: 500000000
-          }
-        ]
-      },
-      '0.oopsie doopsie': {
-        name: 'the bois',
-        messages: [
+          },
           {
-            from: 'yo',
-            content: 'yo',
-            timestamp: 50000
+            from: 'CoolBot',
+            content:
+              'If you have enough computers, you could have as many chats as you see fit.',
+            timestamp: 500000000
+          },
+          {
+            from: 'CoolBot',
+            content: 'Enjoy the app!',
+            timestamp: 500000000
           }
         ]
       }
@@ -60,20 +61,21 @@ export default class Main extends Component {
   componentDidMount() {
     ipc.send('chat-ready');
     ipc.on('chat-new-peer', (_, { username, id }) => {
-      this.setState(({ chats }) => {
-        let nc = chats;
-        nc[id] = {
-          name: username,
-          messages: []
-        };
-        nc = Object.keys(nc).reduce((out, k) => {
-          const cur = nc[k];
-          cur.active = k === id;
-          out[k] = cur;
-          return out;
-        }, {});
-        return nc;
-      });
+      if (username !== storage.getItem('username'))
+        this.setState(({ chats }) => {
+          let nc = chats;
+          nc[id] = {
+            name: username,
+            messages: []
+          };
+          nc = Object.keys(nc).reduce((out, k) => {
+            const cur = nc[k];
+            cur.active = k === id;
+            out[k] = cur;
+            return out;
+          }, {});
+          return nc;
+        });
     });
     ipc.on('chat-new-msg', (_, { to, from, content, timestamp }) => {
       this.setState(({ chats }) => {
